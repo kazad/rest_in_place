@@ -112,6 +112,11 @@ RestInPlaceEditor.prototype = {
   loadSuccessCallback : function(data) {
     //jq14: data as JS object, not string.
     if (jQuery.fn.jquery < "1.4") data = eval('(' + data + ')' );
+    
+    // support data without root element
+    var value = data[this.objectName] ? data[this.objectName][this.attributeName] : data[this.attributeName];
+    this.element.html(value);
+    
     this.element.html(data[this.objectName][this.attributeName]);
     this.element.bind('click', {editor: this}, this.clickHandler);
     this.element.removeClass('rip-active');
